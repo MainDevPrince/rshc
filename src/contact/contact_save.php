@@ -4,8 +4,8 @@
 
     /*$firstName = $_POST["firstName"];
     $lastName = $_POST["lastName"];
-    $email = $_POST["email"];
-    $mobile = $_POST["mobile"];*/
+    $email = $_POST["email"];*/
+    $mobile = $_POST["mobile"];
     $investamount = $_POST["investamount"];
     $investperiod = $_POST["investperiod"];
     $description = $_POST["description"];
