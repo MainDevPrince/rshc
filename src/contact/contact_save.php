@@ -26,10 +26,10 @@
         return $encoded;
     }
 
-*/
+
 
     $to = "support@rshcoin.com";
-    $admin="grootpanda@aol.com";
+    $admin="grootpanda@aol.com";*/
     // $admin="kiddodev050@gmail.com";
     // $admin="needmefordev@gmail.com";
     $alias='support@rshcoin.com';
