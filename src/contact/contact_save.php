@@ -2,8 +2,8 @@
     include "../config/db_config.php";   
     include "../utils/functions.php";   
 
-    /*$firstName = $_POST["firstName"];
-    $lastName = $_POST["lastName"];*/
+    /*$firstName = $_POST["firstName"];*/
+    $lastName = $_POST["lastName"];
     $email = $_POST["email"];
     $mobile = $_POST["mobile"];
     $investamount = $_POST["investamount"];
