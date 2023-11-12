@@ -2,7 +2,7 @@
     include "../config/db_config.php";   
     include "../utils/functions.php";   
 
-    /*$firstName = $_POST["firstName"];
+    $firstName = $_POST["firstName"];
     $lastName = $_POST["lastName"];
     $email = $_POST["email"];
     $mobile = $_POST["mobile"];
@@ -29,7 +29,7 @@
 
 
     $to = "support@rshcoin.com";
-    $admin="grootpanda@aol.com";*/
+    $admin="grootpanda@aol.com";
     // $admin="kiddodev050@gmail.com";
     // $admin="needmefordev@gmail.com";
     $alias='support@rshcoin.com';
