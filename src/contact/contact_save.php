@@ -8,8 +8,8 @@
     $mobile = $_POST["mobile"];
     $investamount = $_POST["investamount"];
     $investperiod = $_POST["investperiod"];
-    $description = $_POST["description"];
-    $timestamp = date("Y-m-d H:i:s");*/
+    $description = $_POST["description"];*/
+    $timestamp = date("Y-m-d H:i:s");
     $sql = "INSERT INTO `contacts`
     (`firstname`, `lastname`, `email`, `mobile`, `description`, `investamount`, `investperiod`, `created_at`) 
     VALUES ('$firstName','$lastName','$email','$mobile','$description','$investamount','$investperiod','$timestamp')";
