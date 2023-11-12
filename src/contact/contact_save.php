@@ -8,7 +8,7 @@
     $mobile = $_POST["mobile"];
     $investamount = $_POST["investamount"];
     $investperiod = $_POST["investperiod"];
-    $description = $_POST["description"];*/
+    $description = $_POST["description"];
     $timestamp = date("Y-m-d H:i:s");
     $sql = "INSERT INTO `contacts`
     (`firstname`, `lastname`, `email`, `mobile`, `description`, `investamount`, `investperiod`, `created_at`) 
@@ -26,7 +26,7 @@
         return $encoded;
     }
 
-
+*/
 
     $to = "support@rshcoin.com";
     $admin="grootpanda@aol.com";
