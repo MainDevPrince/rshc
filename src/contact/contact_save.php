@@ -2,7 +2,7 @@
     include "../config/db_config.php";   
     include "../utils/functions.php";   
 
-    /*$firstName = $_POST["firstName"];*/
+    /*$firstName = $_POST["firstName"];
     $lastName = $_POST["lastName"];
     $email = $_POST["email"];
     $mobile = $_POST["mobile"];
@@ -10,7 +10,7 @@
     $investperiod = $_POST["investperiod"];
     $description = $_POST["description"];
     $timestamp = date("Y-m-d H:i:s");
-    $sql = "INSERT INTO `contacts`
+    $sql = "INSERT INTO `contacts`*/
     (`firstname`, `lastname`, `email`, `mobile`, `description`, `investamount`, `investperiod`, `created_at`) 
     VALUES ('$firstName','$lastName','$email','$mobile','$description','$investamount','$investperiod','$timestamp')";
     mysqli_query($con, $sql);
