@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply now !</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container" style="max-width:100%">
+        <form>
+            <h1>apply now !</h1>
+            <input type="text" id="firstName" placeholder="first name" required>
+            <input type="text" id="lastName" placeholder="last name" required>
+            <input type="email" id="email" placeholder="email" required>
+            <input type="text" id="mobile" placeholder="mobile number" required>
+            <div style="display: flex;color: white;width: 90%;margin-top: 10px;" class="align-items-center">
+                <label style="width:40%">choose invest amount</label>
+                
+                    <input type="text" id="investamount" placeholder="100,00 EUR -  1.000.000,00 EUR" required>
+
+                
+            </div>   
+            <div style="display: flex;color: white;width: 90%;margin-top: 10px;" class="align-items-center">
+                <label style="width:40%">choose invest period</label>
+                    <input type="text" id="investperiod" placeholder="from 12-60 months" required>
+
+            </div>           
+            <h4>type your message here...</h4>
+            <textarea id="description" required></textarea>
+            <input type="submit" value="Send" id="button">
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <script>
+        $("#button").click(function(e) {
+            e.preventDefault();
+            var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+            if ($("#firstName").val() == "") {
+                alert("Please input firstname");
+                return;
+            }
+            if ($("#lastName").val() == "") {
+                alert("Please input lastName");
+                return;
+            }
+            if ($("#email").val() == "") {
+                alert("Please input email");
+                return;
+            }
+            if (reg.test($("#email").val()) == false) 
+            {
+                alert('Invalid Email Address!');
+                return;
+            }
+            if ($("#mobile").val() == "" || isNaN($("#mobile").val())) {
+                alert("Please input mobile number correctly! Must be numbers");
+                return;
+            }
+            if ($("#investamount").val() == "") {
+                alert("Please input invest amount correctly");
+                return;
+            }
+            if ($("#investperiod").val() == "") {
+                alert("Please input invest period");
+                return;
+            }
+            $.post("../src/contact/contact_save.php",
+                {
+                    firstName       : $("#firstName").val(),
+                    lastName        : $("#lastName").val(),
+                    email           : $("#email").val(),
+                    mobile          : $("#mobile").val(),
+                    investamount    : $("#investamount").val(),
+                    investperiod    : $("#investperiod").val(),
+                    description     : $("#description").val()
+                },
+                function(response) {
+                    var resp = JSON.parse(response);
+                    if (resp.success == true) {
+                        alert("Successfully sent to admin!");
+                    }
+                }
+            );
+        });
+    </script>
+</body>
+</html>

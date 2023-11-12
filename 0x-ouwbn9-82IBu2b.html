@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Wallet</title>
+  <style>
+    /* Stildefinitionen hier einfügen */
+    /* ... */
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #6c63ff;
+    }
+
+    #balanceDisplay {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
+
+    #totalValue {
+      text-align: center;
+      font-size: 20px;
+      margin-top: 20px;
+    }
+
+    #balanceButtons {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #6c63ff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .circle-button {
+      background-color: #6c63ff;
+      color: white;
+      border: none;
+      width: 250px;
+      height: 50px;
+      border-radius: 8px;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin: 0 auto;
+    }
+
+    #sendForm {
+      display: none;
+    }
+
+    #cancelButton {
+      background-color: #ff4d4d;
+    }
+
+    .error {
+      color: #ff4d4d;
+      text-align: center;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="row align-items-center" style="height:50px">
+      <div class="col-6 d-flex align-items-center h-100">
+        <img class="logo h-100 w-auto mb-0" src="./assets/logo.png" alt="RSHC Logo"/>
+        <span class="pl-3" style="font-size: 25px;">RSHC Wallet</span>
+      </div>
+      <div class="col-3">
+        <select class="form-control float-right w-50" id="colortheme">
+          <option value="dark">Dark</option>
+          <option value="light">Light</option>
+        </select>
+      </div>
+      <div class="col-3">
+        <div class="d-flex justify-content-end" style="height:50px; margin-right:30px">
+          <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle lang-selected" type="button" id="menu1" data-toggle="dropdown" style="color: white; font-size:16px"><img src="https://cdn.weglot.com/flags/rectangle_mat/gb.svg" width="30" height="20" role="none" alt="English flag" class="wg-flag mr-2">English
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1" style="width:120px">
+              <li role="presentation" class="p-3" style="font-size:14px"><a role="menuitem" tabindex="-1" href="#" class="lang-select" data-lang="en"><img src="https://cdn.weglot.com/flags/rectangle_mat/gb.svg" width="30" height="20" role="none" alt="English flag" class="wg-flag mr-2">English</a></li>                  
+              <li role="presentation" class="p-3" style="font-size:14px"><a role="menuitem" tabindex="-1" href="#" class="lang-select" data-lang="de"><img src="https://cdn.weglot.com/flags/rectangle_mat/de.svg" width="30" height="20" role="none" alt="German flag" class="wg-flag mr-2">German</a></li>
+              <li role="presentation" class="p-3" style="font-size:14px"><a role="menuitem" tabindex="-1" href="#" class="lang-select" data-lang="cn"><img src="https://cdn.weglot.com/flags/rectangle_mat/cn.svg" width="30" height="20" role="none" alt="Chinese flag" class="wg-flag mr-2">Chinese</a></li>
+                  <!--
+              <li role="presentation" class="p-3" style="font-size:14px"><a role="menuitem" tabindex="-1" href="#" class="lang-select" data-lang="es"><img src="https://cdn.weglot.com/flags/rectangle_mat/es.svg" width="30" height="20" role="none" alt="Spanish flag" class="wg-flag mr-2">Spanish</a></li>
+              -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-5 justify-content-center">
+      <div class="col-10" style="border: 1px solid #3b4046;border-radius: 30px;">
+        <div class="text-center mt-5" style="font-size: 30px;font-weight: 700;"><span id="wallet_send_title">Wallet</span> <span class="owner"></span></div>
+        <div id="balanceDisplay">
+        <div class="text-center mt-2" id="balanceDisplay">
+          <p><span id="wallet_send_balance">Balance:</span> <span id="balance"></span> RSHC</p>
+          <p><span class="wallet_send_price">Preis pro Coin:</span> <span id="rate"></span> <span class="currency">EUR</span></p>
+        </div>
+        <div id="balanceButtons">
+          <button id="showAddressButton" style="border-radius:8px; width:250px;">Zeige Wallet-Adresse</button>
+        </div>
+        <div class="circle-button" id="sendButton" onclick="openSendForm()">Send</div>
+        <div id="totalValue"></div>
+        <p id="errorMessage" class="error" style="display: none;"></p>
+        <form id="sendForm" class="mt-4">
+          <div>
+            <label for="recipientAddress" class="col-4" id="wallet_send_receipient">Receipient Wallet-Address:</label>
+            <input type="text" id="recipientAddress" required>
+          </div>
+          <div>
+            <label for="coinAmount" class="col-4 mt-2" id="wallet_send_quantity">Coin Menge:</label>
+            <input type="number" id="coinAmount" required step="0.0001">
+          </div>
+          <p><span class="wallet_send_price">Preis pro Coin:</span> <span id="rate-send"></span> <span class="currency">EUR</span></p>
+          <div>
+            <button type="submit" id="wallet_send_transaction">Transaktion senden</button>
+            <button type="button" id="cancelButton" onclick="closeSendForm()">Abbrechen</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+  <script src="./js/custom.js"></script>
+  <script>
+    var colorTheme = sessionStorage.getItem('colorTheme');
+    bodyColorTheme(colorTheme);
+    $("#colortheme").change(function(){
+      sessionStorage.setItem('colorTheme', $("#colortheme").val());
+      bodyColorTheme($("#colortheme").val());
+    });
+    function bodyColorTheme(color) {
+      $("body").removeAttr("style");
+      if (color == null || color == "dark") {
+        $("body").css({backgroundColor: "#0f064c", color: "white"});
+        $("#colortheme").val("dark");
+      }
+      else {
+        $("body").css({backgroundColor: "#e9e9fc", color: "black"});
+        $("#colortheme").val("light");
+      }      
+    }
+    
+    var pricePerCoin = 0; // Preis pro Coin in Euro
+    var balance = 0; // Aktuelle Coin-Balance
+    var walletAddress = '0x278bf8d26fBEA42EfF65210AB7ecDD67';
+    $( document ).ready(function() {
+      $.get("./src/wallet/getinfo.php?walletAddress="+walletAddress,
+          function(response) {
+            var resp = JSON.parse(response);
+            $('#balance').text(parseFloat(resp.wallet.balance).toLocaleString("es-ES", {minimumFractionDigits: 2}));             
+            $('#rate').text(parseFloat(resp.rate.amount).toLocaleString("es-ES", {minimumFractionDigits: 2}));            
+            $('#rate-send').text(parseFloat(resp.rate.amount).toLocaleString("es-ES", {minimumFractionDigits: 2}));
+            $('.owner').text(resp.wallet.owner); 
+            pricePerCoin = resp.rate.amount; 
+            balance = resp.wallet.balance; 
+            updateTotalValue();
+          }
+      );
+    });   
+
+    // Funktion, um den Gesamtwert aller Coins zu berechnen und anzuzeigen
+    function updateTotalValue() {
+      var totalValue = pricePerCoin * balance;
+      document.getElementById('totalValue').innerHTML = '<span id="wallet_send_all">Gesamtwert aller Coins: </span>' + totalValue.toLocaleString("es-ES", {minimumFractionDigits: 2}) + ' <span class="currency">EUR</span>';
+    }
+
+
+    // Funktion, um die aktuelle Coin-Balance anzuzeigen
+    function updateBalance() {
+      $('#balance').text(balance.toLocaleString("es-ES", {minimumFractionDigits: 2}));  
+    }
+
+
+    // Funktion zum Öffnen des Senden-Formulars
+    function openSendForm() {
+      document.getElementById('balanceButtons').style.display = 'none';
+      document.getElementById('sendButton').style.display = 'none';
+      document.getElementById('sendForm').style.display = 'block';
+    }
+
+    // Funktion zum Schließen des Senden-Formulars
+    function closeSendForm() {
+      document.getElementById('balanceButtons').style.display = 'block';
+      document.getElementById('sendButton').style.display = 'flex';
+      document.getElementById('sendForm').style.display = 'none';
+    }
+
+    // Funktion zum Senden der Transaktion
+    function sendTransaction() {
+      var recipientAddress = document.getElementById('recipientAddress').value;
+      var coinAmount = parseFloat(document.getElementById('coinAmount').value);
+
+      // Validierung der Eingaben
+      if (isNaN(coinAmount) || coinAmount <= 0) {
+        document.getElementById('errorMessage').textContent = 'Ungültige Coin-Menge.';
+        document.getElementById('errorMessage').style.display = 'block';
+        return;
+      }
+      $.get("./src/wallet/transaction.php?fromaddress="+walletAddress+"&toaddress="+$('#recipientAddress').val()+"&amount="+$('#coinAmount').val(),
+          function(response) {
+              var resp = JSON.parse(response);
+              if (resp.success == true) {
+                  alert('Transaction successfully sent.');
+                  balance -= coinAmount;
+                  updateBalance();
+                  updateTotalValue();
+                  closeSendForm();
+              } else {
+                  alert(resp.success);
+                  closeSendForm();
+              }
+          }
+      );
+    }
+
+    document.getElementById('showAddressButton').addEventListener('click', function() {
+      alert('Wallet-Adresse: ' + walletAddress);
+    });
+
+    document.getElementById('sendForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      sendTransaction();
+    });
+  </script>
+</body>
+</html>

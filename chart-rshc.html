@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Trading Chart ähnlich wie TradingView</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+  <style>
+    /* Chart-Container-Stil */
+    .chart-container {
+      position: relative;
+      margin: auto;
+      width: 80%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Trading Chart ähnlich wie TradingView</h1>
+  <div class="chart-container">
+    <canvas id="myChart" width="800" height="400"></canvas>
+  </div>
+  <script>
+    // Daten für den Chart
+    const labels = ['1.7.23', '20.9.23'];
+    const data = [1.22, 1.62];
+
+    // Chart erstellen
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'COIN rshc Kurs',
+          data: data,
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 2,
+          fill: false,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            type: 'time',
+            time: {
+              parser: 'YYYY-MM-DD',
+              tooltipFormat: 'll',
+              unit: 'day',
+              unitStepSize: 1,
+              displayFormats: {
+                'day': 'MMM D',
+              },
+            },
+            display: true,
+          },
+          y: {
+            beginAtZero: false,
+          }
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+          },
+          tooltip: {
+            intersect: false,
+          }
+        },
+      }
+    });
+  </script>
+</body>
+</html>
